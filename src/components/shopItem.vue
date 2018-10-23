@@ -1,0 +1,158 @@
+<template id="shopItem">
+	<div class="shop-item" v-if="returnedItem" >
+		<img :src="returnedItem.img" alt="Iphone" class="main-image">
+		<p class="name"> {{ returnedItem.name }} </p> 
+		<span class="price"> {{returnedItem.price}} руб. </span>
+		<div class="buyings" v-if="this.$route.path == '/'">			
+			<a href="#openModal" >				
+				<button  id="show-modal" @click="showModal = true" class="cart">
+					<img  src="../assets/cart-light.png" alt="">
+					<span @click="addToCart(item)">В корзину</span>
+				</button>
+			</a>
+			<button class="wish" @click="addToWishlist(item)">
+				<img src="../assets/wish-light.png" alt="">
+			</button>
+		</div>
+		<div class="buyings" v-else-if="this.$route.path == '/cart'">
+			<button class="wish" @click="moveToWishList(item)">
+				<img src="../assets/wish-light.png" alt="">
+			</button>
+			<button class="trashcan" @click="deleteCartItem(item)">
+				<img src="../assets/trashcan.png" alt="">
+			</button>
+		</div>
+		<div class="buyings" v-if="this.$route.path == '/wishlist'">			
+			<a href="#openModal" >		
+				<button  id="show-modal" @click="showModal = true" 
+				class="cart">
+				<img src="../assets/cart-light.png" alt="">
+			</button>
+		</a>
+		<button class="trashcan" @click="deleteWishlistItem(item)">
+			<img src="../assets/trashcan.png" alt="">
+		</button>
+	</div>
+	<modal v-if="showModal" @close="showModal = false" @succeed="moveToCart(item)" :current="returnedItem">
+	</modal>
+</div>
+</template>
+
+<script>
+	import modal from '../components/modal.vue'
+	import axios from 'axios'
+
+	export default {
+
+		name: 'shopItem',
+		components: {
+			modal
+		},
+		data () {
+			return {
+				showModal: false
+			}
+		},
+		props:['item'],
+		methods:{
+			deleteCartItem(shopItem){
+				for(var key in this.$store.state.cartItems){
+					if (shopItem.key == this.$store.state.cartItems[key].key) {
+						this.$store.commit('removeFromCart', { payload: shopItem, id: key })
+						return;
+					}
+				}
+			},
+			deleteWishlistItem(shopItem){
+				for(var key in this.$store.state.wishlistItems){
+					if (shopItem.key == this.$store.state.wishlistItems[key].key) {
+						this.$store.commit('removeFromWishlist', { payload: shopItem, id: key })
+						return;
+					}
+				}
+			},
+			addToCart(shopItem){
+				this.$store.commit('addItemToCart', { payload: shopItem })
+			},
+			addToWishlist(shopItem){
+				this.$store.commit('addItemToWishList', { payload: shopItem })
+			},
+			moveToCart(shopItem){
+				this.addToCart(shopItem)
+				this.deleteWishlistItem(shopItem)
+			},
+			moveToWishList(shopItem){
+				this.addToWishlist(shopItem)
+				this.deleteCartItem(shopItem)
+			}
+		},
+		computed:{
+			someProp(){
+				return this.wishlist
+			},
+			returnedItem(){
+				return this.item
+			}
+		}
+	}
+
+</script>
+<style scoped>
+.shop-item{
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-content: center;
+	flex: 1 1 25%;
+	max-width: 15%;
+	min-height: 25vh;
+	margin-right: 7.5%;
+	margin-left: 7.5%;
+	margin: 0 7.5% 40px 7.5%;
+}
+
+.buyings{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+.cart, .wish, .trashcan{
+	height: 40px;
+	min-width: 40px;
+}
+.cart{
+	display: flex;
+
+}
+.cart span{
+	margin: auto;
+
+}
+.cart img, .wish img, .trashcan img{
+	height: 100%;
+}
+.main-image{
+	max-height:200px;
+	max-width: 100%;
+}
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	display: none;
+	pointer-events: none;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+
+</style>
