@@ -12,13 +12,13 @@
             <div class="item-info">
               <span>{{current.name}}</span>
               <span>Кол-во: <input class="count" size="20" type="number" v-model="count" name=""></span>
-              <span>Сумма: {{totalCount}} руб.</span>              
+              <span>Сумма: {{totalCount}} руб.</span>    
             </div>
           </div>
 
           <div class="modal-footer">
             <button class="flex" @click="addToCart">
-              <img src="../assets/cart-light.png" alt="">
+              <img src="../../assets/cart-light.png" alt="">
               <span>Добавить</span>
             </button>
           </div>
@@ -95,6 +95,8 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .modal-header h3 {
@@ -129,9 +131,8 @@
   margin: auto;
 }
 
+
 .close{
-  position: fixed;
-  right: 10px; 
-  top: 10px; 
+  align-self: flex-end;
 }
 </style>

@@ -3,30 +3,35 @@
 		"key" : 0,
 		"name": "iPhone 8",
 		"price": 10010,
+		"count": 2,
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"2": {
 		"key" : 1,
 		"name": "iPhone 86",
 		"price": 100020,
+		"count": 2,
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"3": {
 		"key" : 2,
 		"name": "iPhone 6",
 		"price": 10030,
+		"count": 1,
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"4": {
 		"key" : 3,
 		"name": "iPhone 6",
 		"price": 10040,
+		"count": 1,
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"5": {
 		"key" : 4,
 		"name": "iPhone 6",
 		"price": 10050,
+		"count": 3,
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	}
 }

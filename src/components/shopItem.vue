@@ -2,7 +2,8 @@
 	<div class="shop-item" v-if="returnedItem" >
 		<img :src="returnedItem.img" alt="Iphone" class="main-image">
 		<p class="name"> {{ returnedItem.name }} </p> 
-		<span class="price"> {{returnedItem.price}} руб. </span>
+		<span class="price"> {{returnedItem.price}}₽ <span v-if="this.$route.path == '/cart'">(x{{returnedItem.count}})</span> </span>
+
 		<div class="buyings" v-if="this.$route.path == '/'">			
 			<a href="#openModal" >				
 				<button  id="show-modal" @click="showModal = true" class="cart">
@@ -39,7 +40,8 @@
 </template>
 
 <script>
-	import modal from '../components/modal.vue'
+	import modal from '../components/modal/modal.vue'
+	import moment from 'moment'
 	import axios from 'axios'
 
 	export default {
@@ -72,9 +74,11 @@
 				}
 			},
 			addToCart(shopItem){
+				shopItem.date = moment().format('h:mm:ss DD-MM-YYYY')
 				this.$store.commit('addItemToCart', { payload: shopItem })
 			},
 			addToWishlist(shopItem){
+				shopItem.date = moment().format('h:mm:ss DD-MM-YYYY')
 				this.$store.commit('addItemToWishList', { payload: shopItem })
 			},
 			moveToCart(shopItem){
@@ -98,6 +102,9 @@
 
 </script>
 <style scoped>
+.price{
+	margin-bottom: 5px;
+}
 .shop-item{
 	display: flex;
 	flex-flow: column nowrap;

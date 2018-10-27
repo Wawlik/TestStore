@@ -3,42 +3,49 @@
 		"key" : 10,
 		"name": "iPhone 7",
 		"price": 11,
+		"date": "13:07:56 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"2": {
 		"key" : 11,
 		"name": "iPhone 7",
 		"price": 12,
+		"date": "13:07:56 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"3": {
 		"key" : 12,
 		"name": "iPhone 6",
 		"price": 13,
+		"date": "13:07:56 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"4": {
 		"key" : 13,
 		"name": "iPhone 6",
 		"price": 4,
+		"date": "14:07:56 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"5": {
 		"key" : 14,
 		"name": "iPhone 6",
 		"price": 15,
+		"date": "13:07:56 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"6": {
 		"key" : 15,
 		"name": "iPhone 6",
 		"price": 16,
+		"date": "13:07:57 12.12.2027",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"7": {
 		"key" : 156,
 		"name": "iPhone 6",
 		"price": 11236,
+		"date": "13:07:57 12.12.2037",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	}
 }

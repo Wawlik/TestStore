@@ -14,14 +14,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     addItemToCart (state, payload) {
-      state.cartCount += 1   
+      state.cartCount += 1
       if (Object.keys(state.cartItems).length >= 20) {
         state.cartCount -= 1
         console.log('Слишком много товаров в корзине, удалите что-нибудь, а затем добавьте снова')
         return
       }
-      console.log((['payload'] in state.cartItems))
-      console.log('(payload in state.cartItems)')
       for (let i = 1; i < 30; i++) {
         if (!(i in state.cartItems)) {
           state.cartItems[i] = payload.payload
