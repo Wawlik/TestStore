@@ -93,7 +93,7 @@
 <style scoped>
 
 #navbar{
-  height: 60px;
+  min-height: 60px;
   margin: 0 0 40px 0;
   background-color: #00BF0E;
   border-radius: 2px; 

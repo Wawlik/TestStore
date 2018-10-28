@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store/index.js'
 import InputmaskCore from 'inputmask-core'
+import VeeValidate from 'vee-validate'
 
+Vue.use(VeeValidate)
 window.Vue = Vue
 Vue.config.productionTip = false
 

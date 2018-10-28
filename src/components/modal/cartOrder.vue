@@ -9,21 +9,31 @@
           </div>
           <div class="modal-body">
             <div class="item-info">
-              <span>John Doe</span>
+              <span>{{user}}</span>
               <span>Телефон:</span>
-              <masked-input v-model="phone" mask="\+1 (111) 111-1111" placeholder="Phone number" type="email" />
+              <masked-input :class="{'input': true, 'is-danger': errors.has('telephone') }"
+              v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ }" 
+              v-model="phone" mask="\+1 (111) 111-1111" name="telephone" placeholder="Номер телефона" type="tel" />
+              <span  class="error">{{ errors.first('telephone') }}</span>
+
               <span>Электронная почта:</span>
-              <masked-input v-model="email" mask="" placeholder="Введите свой номер телефона" type="email" />
+              <input v-model="email" :class="{'input': true, 'is-danger': errors.has('email') }" 
+              v-validate="'required|email'" name="email" type="text" >
+              <span class="error">{{ errors.first('email') }}</span>
+
               <span>Адрес заказа: </span>   
-              <textarea name="adress" id="client-address" cols="30" rows="3" v-model="clientAdress" 
+              <textarea :class="{'input': true, 'is-danger': errors.has('adress') }" 
+              name="adress" v-validate="'required'" id="client-address" cols="30" rows="3" v-model="clientAdress" 
               placeholder="Введите свой адрес"></textarea>
+              <span class="error">{{ errors.first('adress') }}</span>
+
             </div>
-            <div class="price-container">
+            <div >
               <span class="align-end">Сумма: <br> <span class="totalPrice">{{totalCount}}₽</span> </span>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="flex" @click="$emit('close')">
+            <button class="flex" @click="formOrder" :disabled='errors.any() || !isComplete'>
               <img src="../../assets/cart-light.png" alt="">
               <span >Сделать заказ</span>
             </button>
@@ -44,14 +54,18 @@
     },
     data () {
       return {
-        count: 1,
         phone: '',
         clientAdress: '',
-        email: ''
+        email: '',
+        user: 'John Doe'
       }
     },
     props:['current'],
     computed:{
+
+      isComplete () {
+        return this.phone && this.clientAdress && this.email
+      },
       totalCount(){
        let total = 0;
        let cart = this.$store.state.cartItems
@@ -62,19 +76,36 @@
     }
   },
   methods:{
-    addToCart(){
-      this.$emit('succeed')
-      this.$emit('close')
+    formOrder(){
+     let items = Object.values(this.$store.state.cartItems).map( function(item){
+      return { key: item.key,
+        count: item.count 
+      }       
+    })
+     let order = {
+      user: this.user,
+      phone: this.phone,
+      address: this.clientAdress,
+      email: this.email,
+      orderedItems: items
     }
+    this.$emit('close')
+    this.$emit('success', order)
+    return
+  },
+  addToCart(){
+    this.$emit('succeed')
+    this.$emit('close')
   }
+}
 }
 </script>
 <style scoped>
 #client-address{
-   width:90%;
-    max-width:90%;
-    max-height:30%;
-    resize: none;
+ width:90%;
+ max-width:90%;
+ max-height:30%;
+ resize: none;
 }
 .flex{
   display: flex;
@@ -162,5 +193,12 @@
 .totalPrice{
   color: #00BF0E;
   font: 24px Verdana bold;
+}
+.error{
+  font-size: 10px;
+  color: red;
+}
+.is-danger {
+  outline-color:  red;
 }
 </style>

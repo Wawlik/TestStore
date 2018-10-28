@@ -11,7 +11,10 @@
     <div class="shop-items-section">
       <shop-item v-for="item in items" :item="item"></shop-item>
     </div>
-    <cart-order  v-if="showModal" @close="showModal = false" :items="cartItems"></cart-order>
+    <cart-order  v-if="showModal" @close="showModal = false" @success="showData" :items="cartItems"></cart-order>
+    <div class="data-section" v-if="jsonData">  
+        <p> {{jsonData}}</p>
+    </div>
   </div>
 </template>
 
@@ -32,8 +35,19 @@
         cartItems : this.$store.state.cartItems,
         globeItems: globe,
         showModal: false,
-        maskedField: ''
-
+        maskedField: '',
+        jsonData: ''
+      }
+    },
+    methods:{
+      showData(data){
+        this.jsonData = data
+        console.log(this.jsonData)
+        console.log('jsonData')
+        setTimeout(this.clearJsonData, 10000)
+      },
+      clearJsonData(){
+        this.jsonData = ''
       }
     },
     computed:{
