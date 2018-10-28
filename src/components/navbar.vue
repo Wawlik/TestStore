@@ -10,7 +10,7 @@
           <img src="../../src/assets/wish.png" height="32px" alt="">
           <span class="navbar-main-blocks cursor-default"> {{ wishListGoodsCount}} товар{{wishEnding }}  </span>
           <div class="dropdown-content">
-           <a href="  " class="wish-item"
+           <a href="" class="wish-item"
            v-for="(item,index) in wishlistItemsSortedByDate.slice(0,5)" >
            <img :src="item.img" alt="">
            <span class="align-self-start">{{item.name}}</span>
@@ -57,13 +57,13 @@
         for(var key in cart){
           total+= cart[key].price * cart[key].count
         }
-        return total;
+        return total
       },
       wishListGoodsCount(){
-        return this.$store.state.wishlistCount;
+        return this.$store.state.wishlistCount
       },
       goodsTotalCount(){
-        return this.$store.state.cartCount;
+        return this.$store.state.cartCount
       },
       wishEnding(){
        return this.endFind(this.wishListGoodsCount)
@@ -72,7 +72,7 @@
        return this.endFind(this.goodsTotalCount)
      },
      wishlistItemsSortedByDate(){
-      return Object.values(this.$store.state.wishlistItems).sort( (a,b) => moment(a.date).isBefore(b.date))
+      return Object.values(this.$store.state.wishlistItems).sort((a,b) => moment(a.date).isBefore(b.date))
     },
   },
   methods:{

@@ -11,7 +11,7 @@
             <img class="main-image" :src="current.img" alt="goods">
             <div class="item-info">
               <span>{{current.name}}</span>
-              <span>Кол-во: <input class="count" size="20" type="number" v-model="count" name=""></span>
+              <span>Кол-во: <input class="count" size="20" min="1" type="number" v-model="count" name=""></span>
               <span>Сумма: {{totalCount}} руб.</span>    
             </div>
           </div>
@@ -45,6 +45,7 @@
     },
     methods:{
       addToCart(){
+        this.current.count = this.count
         this.$emit('succeed')
         this.$emit('close')
       }

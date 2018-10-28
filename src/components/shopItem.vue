@@ -2,41 +2,47 @@
 	<div class="shop-item" v-if="returnedItem" >
 		<img :src="returnedItem.img" alt="Iphone" class="main-image">
 		<p class="name"> {{ returnedItem.name }} </p> 
-		<span class="price"> {{returnedItem.price}}₽ <span v-if="this.$route.path == '/cart'">(x{{returnedItem.count}})</span> </span>
+		<span class="price"> {{returnedItem.price}}₽ 
+			<input v-if="this.$route.path == '/cart'" min="1" class="count" size="20"
+			type="number" v-model="returnedItem.count" name=""> </span>
 
-		<div class="buyings" v-if="this.$route.path == '/'">			
-			<a href="#openModal" >				
-				<button  id="show-modal" @click="showModal = true" class="cart">
-					<img  src="../assets/cart-light.png" alt="">
-					<span @click="addToCart(item)">В корзину</span>
+			<div class="buyings" v-if="this.$route.path == '/'">			
+				<a href="#openModal" >				
+					<button  id="show-modal" @click="showModal = true" class="cart">
+						<img src="../assets/cart-light.png" alt="">
+						<span>В корзину</span>
+					</button>
+				</a>
+				<button class="wish" @click="moveToWishList(item)">
+					<img src="../assets/wish-light.png" alt="">
+				</button>
+			</div>
+
+			<div v-else-if="this.$route.path == '/cart'">
+				<div class="buyings">
+					<button class="wish" @click="moveToWishList(item)">
+						<img src="../assets/wish-light.png" alt="">
+					</button>
+					<button class="trashcan" @click="deleteCartItem(item)">
+						<img src="../assets/trashcan.png" alt="">
+					</button>				
+				</div>
+			</div>
+
+			<div class="buyings" v-if="this.$route.path == '/wishlist'">			
+				<a href="#openModal" >		
+					<button  id="show-modal" @click="showModal = true" 
+					class="cart">
+					<img src="../assets/cart-light.png" alt="">
 				</button>
 			</a>
-			<button class="wish" @click="addToWishlist(item)">
-				<img src="../assets/wish-light.png" alt="">
-			</button>
-		</div>
-		<div class="buyings" v-else-if="this.$route.path == '/cart'">
-			<button class="wish" @click="moveToWishList(item)">
-				<img src="../assets/wish-light.png" alt="">
-			</button>
-			<button class="trashcan" @click="deleteCartItem(item)">
+			<button class="trashcan" @click="deleteWishlistItem(item)">
 				<img src="../assets/trashcan.png" alt="">
 			</button>
 		</div>
-		<div class="buyings" v-if="this.$route.path == '/wishlist'">			
-			<a href="#openModal" >		
-				<button  id="show-modal" @click="showModal = true" 
-				class="cart">
-				<img src="../assets/cart-light.png" alt="">
-			</button>
-		</a>
-		<button class="trashcan" @click="deleteWishlistItem(item)">
-			<img src="../assets/trashcan.png" alt="">
-		</button>
+		<modal v-if="showModal" @close="showModal = false" @succeed="moveToCart(item)" :current="returnedItem">
+		</modal>
 	</div>
-	<modal v-if="showModal" @close="showModal = false" @succeed="moveToCart(item)" :current="returnedItem">
-	</modal>
-</div>
 </template>
 
 <script>
@@ -61,17 +67,18 @@
 				for(var key in this.$store.state.cartItems){
 					if (shopItem.key == this.$store.state.cartItems[key].key) {
 						this.$store.commit('removeFromCart', { payload: shopItem, id: key })
-						return;
 					}
 				}
+				return
+				
 			},
 			deleteWishlistItem(shopItem){
 				for(var key in this.$store.state.wishlistItems){
 					if (shopItem.key == this.$store.state.wishlistItems[key].key) {
 						this.$store.commit('removeFromWishlist', { payload: shopItem, id: key })
-						return;
 					}
 				}
+				return
 			},
 			addToCart(shopItem){
 				shopItem.date = moment().format('h:mm:ss DD-MM-YYYY')
@@ -117,7 +124,9 @@
 	margin-left: 7.5%;
 	margin: 0 7.5% 40px 7.5%;
 }
-
+.count{
+	width: 30px;
+}
 .buyings{
 	display: flex;
 	flex-flow: row nowrap;
@@ -136,7 +145,7 @@
 
 }
 .cart img, .wish img, .trashcan img{
-	height: 100%;
+	height: 90%;
 }
 .main-image{
 	max-height:200px;

@@ -13,7 +13,8 @@
               <span>Телефон:</span>
               <masked-input :class="{'input': true, 'is-danger': errors.has('telephone') }"
               v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ }" 
-              v-model="phone" mask="\+1 (111) 111-1111" name="telephone" placeholder="Номер телефона" type="tel" />
+              v-model="phone" mask="\+1 (111) 111-1111" name="telephone"
+              placeholder="Номер телефона" type="tel" />
               <span  class="error">{{ errors.first('telephone') }}</span>
 
               <span>Электронная почта:</span>
@@ -23,7 +24,8 @@
 
               <span>Адрес заказа: </span>   
               <textarea :class="{'input': true, 'is-danger': errors.has('adress') }" 
-              name="adress" v-validate="'required'" id="client-address" cols="30" rows="3" v-model="clientAdress" 
+              name="adress" v-validate="'required'" id="client-address" cols="30"
+              rows="3" v-model="clientAdress" 
               placeholder="Введите свой адрес"></textarea>
               <span class="error">{{ errors.first('adress') }}</span>
 
@@ -79,8 +81,8 @@
     formOrder(){
      let items = Object.values(this.$store.state.cartItems).map( function(item){
       return { key: item.key,
-        count: item.count 
-      }       
+        count: item.count
+      }
     })
      let order = {
       user: this.user,

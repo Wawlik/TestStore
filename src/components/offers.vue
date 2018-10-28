@@ -1,17 +1,21 @@
 <template>
   <div id="offers">
-    <div v-if="this.$route.path =='/cart'" class="cart-order-section">
+    <div v-if="this.$route.path =='/cart' && Object.values(items).length !== 0" class="cart-order-section">
         <span>Привет, John Doe!</span>
         <a href="#openCartOrder" >        
-          <button class="order-button" id="cart-order" @click="showModal = true">
+          <button v-if="" class="order-button" id="cart-order" @click="showModal = true">
             <span>Оформить заказ</span>
           </button>
         </a>
     </div>
+    <div class="cart-empty" v-else-if="this.$route.path =='/cart' && Object.values(items).length == 0">
+      <h1>Бегом за Акулой из ИКЕИ!</h1>
+    </div>
     <div class="shop-items-section">
       <shop-item v-for="item in items" :item="item"></shop-item>
     </div>
-    <cart-order  v-if="showModal" @close="showModal = false" @success="showData" :items="cartItems"></cart-order>
+    <cart-order  v-if="showModal" @close="showModal = false" 
+    @success="showData" :items="cartItems"></cart-order>
     <div class="data-section" v-if="jsonData">  
         <p> {{jsonData}}</p>
     </div>
@@ -42,8 +46,6 @@
     methods:{
       showData(data){
         this.jsonData = data
-        console.log(this.jsonData)
-        console.log('jsonData')
         setTimeout(this.clearJsonData, 10000)
       },
       clearJsonData(){
