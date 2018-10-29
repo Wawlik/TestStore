@@ -63,30 +63,31 @@
 		},
 		props:['item'],
 		methods:{
-			deleteCartItem(shopItem){
+			deleteCartItem(item){
+				let search = item.key
 				for(var key in this.$store.state.cartItems){
-					if (shopItem.key == this.$store.state.cartItems[key].key) {
-						this.$store.commit('removeFromCart', { payload: shopItem, id: key })
+					if (search == this.$store.state.cartItems[key].key) {
+						this.$store.commit('removeFromCart', { payload: item, id: key })
 					}
 				}
 				return
 				
 			},
-			deleteWishlistItem(shopItem){
+			deleteWishlistItem(item){
 				for(var key in this.$store.state.wishlistItems){
-					if (shopItem.key == this.$store.state.wishlistItems[key].key) {
-						this.$store.commit('removeFromWishlist', { payload: shopItem, id: key })
+					if (item.key == this.$store.state.wishlistItems[key].key) {
+						this.$store.commit('removeFromWishlist', { payload: item, id: key })
 					}
 				}
 				return
 			},
-			addToCart(shopItem){
-				shopItem.date = moment().format('h:mm:ss DD-MM-YYYY')
-				this.$store.commit('addItemToCart', { payload: shopItem })
+			addToCart(item){
+				item.date = moment().format('h:mm:ss DD-MM-YYYY')
+				this.$store.commit('addItemToCart', { payload: item })
 			},
-			addToWishlist(shopItem){
-				shopItem.date = moment().format('h:mm:ss DD-MM-YYYY')
-				this.$store.commit('addItemToWishList', { payload: shopItem })
+			addToWishlist(item){
+				item.date = moment().format('h:mm:ss DD-MM-YYYY')
+				this.$store.commit('addItemToWishList', { payload: item })
 			},
 			moveToCart(shopItem){
 				this.addToCart(shopItem)

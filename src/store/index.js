@@ -22,6 +22,7 @@ const store = new Vuex.Store({
       }
       for (let i = 1; i < 30; i++) {
         if (!(i in state.cartItems)) {
+          state.cartItems[i] = payload.payload
           return
         }
       }
