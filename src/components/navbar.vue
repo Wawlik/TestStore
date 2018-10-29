@@ -16,6 +16,7 @@
            <span class="align-self-start">{{item.name}}</span>
            <span class="align-self-end">{{item.date}}</span>
          </a>
+
          <router-link class="switch-to-wishlist" to="/wishlist">
           <img src="../../src/assets/heart.png" alt="">
           <span> Мои желания</span>
@@ -72,7 +73,8 @@
        return this.endFind(this.goodsTotalCount)
      },
      wishlistItemsSortedByDate(){
-      return Object.values(this.$store.state.wishlistItems).sort((a,b) => moment(a.date).isBefore(b.date))
+      return Object.values(this.$store.state.wishlistItems).sort( (a,b) => 
+        moment(a.date).isBefore(b.date) == true ? 1 : moment(a.date).isBefore(b.date) == false ? -1 : 0)
     },
   },
   methods:{
@@ -157,8 +159,7 @@ a {
   font: 20px Verdana;
   user-select: none;
 }
-.main:hover,
-.control:hover{
+.main:hover{
   background-color: #007F09;
 
 }
@@ -236,13 +237,13 @@ a{
   display: block;
 }
 .wish-item{
-  height: 50px;
+  min-height: 50px;
   display: inline-block;
   flex-flow: row nowrap;
   align-content: center;
 }
 .wish-item img{
-  height: 100%;
+  height: 40px;
 }
 .switch-to-wishlist{
   background-color: #f9f9f9;

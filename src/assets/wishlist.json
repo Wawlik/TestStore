@@ -38,14 +38,14 @@
 		"key" : 15,
 		"name": "iPhone 6",
 		"price": 16,
-		"date": "13:07:57 12.12.2027",
+		"date": "13:07:57 12.12.2017",
 		"img": "https://www.o2.co.uk/shop/homepage/images/shop15/brand/apple/iphone-6/apple-iphone-6-2016-ios-10-gallery-img-2-101016.jpg"
 	},
 	"7": {
 		"key" : 156,
 		"name": "Акула из ИКЕИ",
 		"price": 100000,
-		"date": "13:07:57 12.12.2037",
+		"date": "13:07:57 02.02.2018",
 		"img": "https://www.ikea.com/ru/ru/images/products/blohej-magkaa-igruska__0120529_PE277198_S4.JPG"
 	}
 }
