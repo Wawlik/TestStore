@@ -51,14 +51,12 @@
         dataset:[]
       }
     },
+    created(){
+      this.$store.commit('setCartCost')
+    },
     computed:{
       moneyTotalCount(){
-        let total = 0;
-        let cart = this.$store.state.cartItems
-        for(var key in cart){
-          total+= cart[key].price * cart[key].count
-        }
-        return total
+        return this.$store.state.cartTotalCost
       },
       wishListGoodsCount(){
         return this.$store.state.wishlistCount
@@ -220,16 +218,7 @@ a{
   overflow-y: scroll;
 }
 
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 10px 15px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
+.wish-item:hover, .switch-to-wishlist:hover {
   background-color: #ddd;
 }
 
@@ -238,16 +227,24 @@ a{
 }
 .wish-item{
   min-height: 50px;
-  display: inline-block;
-  flex-flow: row nowrap;
+  flex-flow: row nowrap; 
+  float: none;
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
   align-content: center;
 }
 .wish-item img{
   height: 40px;
 }
 .switch-to-wishlist{
+  display: block;
+  color: black;
   background-color: #f9f9f9;
   height:20px;
+  padding: 10px 15px;
   text-align: center;
 }
 .switch-to-wishlist img{

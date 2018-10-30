@@ -10,9 +10,17 @@ const store = new Vuex.Store({
     wishlistCount: Object.keys(wishlist).length,
     cartCount: Object.keys(cart).length,
     cartItems: cart,
-    wishlistItems: wishlist
+    wishlistItems: wishlist,
+    cartTotalCost: 0
   },
   mutations: {
+    setCartCost (state) {
+      let total = 0
+      for (var key in state.cartItems) {
+        total += state.cartItems[key].price * state.cartItems[key].count
+      }
+      state.cartTotalCost = total
+    },
     addItemToCart (state, payload) {
       state.cartCount += 1
       if (state.cartCount > 20) {
@@ -23,6 +31,7 @@ const store = new Vuex.Store({
       for (let i = 1; i < 30; i++) {
         if (!(i in state.cartItems)) {
           state.cartItems[i] = payload.payload
+          state.cartTotalCost += payload.payload.price * payload.payload.count
           return
         }
       }
@@ -43,7 +52,7 @@ const store = new Vuex.Store({
     },
     removeFromCart (state, payload, id) {
       Vue.delete(state.cartItems, payload.id)
-      state.count -= payload.price
+      state.cartTotalCost -= payload.payload.price * payload.payload.count
       state.cartCount -= 1
     },
     removeFromWishlist (state, payload, id) {
