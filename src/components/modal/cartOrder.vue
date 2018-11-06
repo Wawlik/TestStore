@@ -3,27 +3,27 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <a @click="$emit('close')" class="align-end">×</a>
+          <a @click="closeModal" class="align-end pointer">×</a>
           <div class="modal-header">
             <h3>Оформление заказа</h3>
           </div>
           <div class="modal-body">
             <div class="item-info">
-              <span>{{user}}</span>
+              <span>{{ user }}</span>
               <span>Телефон:</span>
-              <masked-input :class="{'input': true, 'is-danger': errors.has('telephone') }"
-              v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ }" 
-              v-model="phone" mask="\+1 (111) 111-1111" name="telephone"
+              <masked-input :class="{'input': true, 'is-danger': errors.has('telephone')}"
+              v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/}" 
+              v-model="phone " mask="\+1 (111) 111-1111" name="telephone"
               placeholder="Номер телефона" type="tel" />
               <span  class="error">{{ errors.first('telephone') }}</span>
 
               <span>Электронная почта:</span>
-              <input v-model="email" :class="{'input': true, 'is-danger': errors.has('email') }" 
+              <input v-model="email" :class="{'input': true, 'is-danger': errors.has('email')}" 
               v-validate="'required|email'" name="email" type="text" >
               <span class="error">{{ errors.first('email') }}</span>
 
               <span>Адрес заказа: </span>   
-              <textarea :class="{'input': true, 'is-danger': errors.has('adress') }" 
+              <textarea :class="{'input': true, 'is-danger': errors.has('adress')}" 
               name="adress" v-validate="'required'" id="client-address" cols="30"
               rows="3" v-model="clientAdress" 
               placeholder="Введите свой адрес"></textarea>
@@ -31,7 +31,7 @@
 
             </div>
             <div >
-              <span class="align-end">Сумма: <br> <span class="totalPrice">{{totalCount}}₽</span> </span>
+              <span class="align-end">Сумма: <br> <span class="totalPrice">{{ totalCount  }}₽</span> </span>
             </div>
           </div>
           <div class="modal-footer">
@@ -64,42 +64,37 @@
     },
     props:['current'],
     computed:{
-
       isComplete () {
         return this.phone && this.clientAdress && this.email
       },
       totalCount(){
-       let total = 0;
-       let cart = this.$store.state.cartItems
-       for(var key in cart){
-        total+= cart[key].price * cart[key].count
+        return this.$store.state.cartTotalCost
       }
-      return total;
-    }
-  },
-  methods:{
-    formOrder(){
-     let items = Object.values(this.$store.state.cartItems).map( function(item){
-      return { key: item.key,
-        count: item.count
+    },
+    methods:{
+      closeModal(){
+        this.$router.go(-1)
+        this.$emit('close')
+      },
+      formOrder(){
+       let items = Object.values(this.$store.state.cartItems).map( function(item){
+        return { key: item.key,
+          count: item.count
+        }
+      })
+       let order = {
+        user: this.user,
+        phone: this.phone,
+        address: this.clientAdress,
+        email: this.email,
+        orderedItems: items
       }
-    })
-     let order = {
-      user: this.user,
-      phone: this.phone,
-      address: this.clientAdress,
-      email: this.email,
-      orderedItems: items
+      this.$router.go(-1)
+      this.$emit('close')
+      this.$emit('success', order)
+      return
     }
-    this.$emit('close')
-    this.$emit('success', order)
-    return
-  },
-  addToCart(){
-    this.$emit('succeed')
-    this.$emit('close')
   }
-}
 }
 </script>
 <style scoped>
@@ -202,5 +197,8 @@
 }
 .is-danger {
   outline-color:  red;
+}
+.pointer{
+  cursor: pointer;  
 }
 </style>

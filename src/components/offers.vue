@@ -1,6 +1,6 @@
 <template>
   <div id="offers">
-    <div v-if="this.$route.path =='/cart' && Object.values(items).length !== 0" class="cart-order-section">
+    <div v-if="place =='cart' && Object.values(items).length !== 0" class="cart-order-section">
         <span>Привет, John Doe!</span>
         <a href="#openCartOrder" >        
           <button v-if="" class="order-button" id="cart-order" @click="showModal = true">
@@ -8,7 +8,7 @@
           </button>
         </a>
     </div>
-    <div class="cart-empty" v-else-if="this.$route.path =='/cart' && Object.values(items).length == 0">
+    <div class="cart-empty" v-else-if="place =='cart' && Object.values(items).length == 0">
       <h1>Бегом за Акулой из ИКЕИ!</h1>
     </div>
     <div class="shop-items-section">
@@ -17,7 +17,7 @@
     <cart-order  v-if="showModal" @close="showModal = false" 
     @success="showData" :items="cartItems"></cart-order>
     <div class="data-section" v-if="jsonData">  
-        <p> {{jsonData}}</p>
+        <p> {{ jsonData }}</p>
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@
         jsonData: ''
       }
     },
+    props:['place'],
     methods:{
       showData(data){
         this.jsonData = data
@@ -54,7 +55,7 @@
     },
     computed:{
       items(){
-        return this.$route.path == '/cart' ? this.cartItems : this.$route.path == '/' ? this.globeItems :
+        return this.$route.path == '/cart' ? this.cartItems : this.$route.path == '/store' ? this.globeItems :
         this.$route.path == '/wishlist' ? this.wishlistItems : null;
       }
     }

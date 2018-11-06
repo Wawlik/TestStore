@@ -2,11 +2,11 @@
 	<div class="shop-item" v-if="returnedItem" >
 		<img :src="returnedItem.img" alt="Iphone" class="main-image">
 		<p class="name"> {{ returnedItem.name }} </p> 
-		<span class="price"> {{returnedItem.price}}₽ 
+		<span class="price"> {{ returnedItem.price }}₽ 
 			<input v-if="this.$route.path == '/cart'" min="1" class="count" size="20"
 			type="number" v-model="returnedItem.count" name=""> </span>
 
-			<div class="buyings" v-if="this.$route.path == '/'">			
+			<div class="buyings" v-if="this.$route.path == '/store'">			
 				<a href="#openModal" >				
 					<button  id="show-modal" @click="showModal = true" class="cart">
 						<img src="../assets/cart-light.png" alt="">
@@ -51,7 +51,6 @@
 	import axios from 'axios'
 
 	export default {
-
 		name: 'shopItem',
 		components: {
 			modal
@@ -61,7 +60,7 @@
 				showModal: false
 			}
 		},
-		props:['item'],
+		props:['item', 'place'],
 		methods:{
 			deleteCartItem(item){
 				let search = item.key
@@ -70,8 +69,7 @@
 						this.$store.commit('removeFromCart', { payload: item, id: key })
 					}
 				}
-				return
-				
+				return				
 			},
 			deleteWishlistItem(item){
 				for(var key in this.$store.state.wishlistItems){
@@ -95,6 +93,7 @@
 			},
 			moveToWishList(shopItem){
 				this.addToWishlist(shopItem)
+				this.$router.push('wishlist')
 				this.deleteCartItem(shopItem)
 			}
 		},

@@ -8,21 +8,10 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/:place',
       name: 'offers',
-      component: offers
-    },
-    {
-      path: '/cart',
-      name: 'offers',
-      component: offers
-    },
-
-    {
-      path: '/wishlist',
-      name: 'offers',
-      component: offers
+      component: offers,
+      props: true
     }
-
   ]
 })

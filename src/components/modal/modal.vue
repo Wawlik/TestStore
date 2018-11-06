@@ -10,14 +10,16 @@
           <div class="modal-body">
             <img class="main-image" :src="current.img" alt="goods">
             <div class="item-info">
-              <span>{{current.name}}</span>
-              <span>Кол-во: <input class="count" size="20" min="1" type="number" v-model="count" name=""></span>
-              <span>Сумма: {{totalCount}} руб.</span>    
+              <span>{{ current.name }}</span>
+              <span>Кол-во: <input v-validate="{required: true, min:1}" 
+                :class="{'count': true, 'is-danger': errors.has('count') }" 
+                name="count" size="20" min="1" type="number" v-model="count"></span>
+              <span>Сумма: {{ totalCount }} руб.</span>    
             </div>
           </div>
 
           <div class="modal-footer">
-            <button class="flex" @click="addToCart">
+            <button class="flex" @click="addToCart" :disabled='errors.any()'>
               <img src="../../assets/cart-light.png" alt="">
               <span>Добавить</span>
             </button>
@@ -48,6 +50,7 @@
         this.current.count = this.count
         this.$emit('succeed')
         this.$emit('close')
+        this.$router.go(-1)
       }
     }
   }
@@ -109,7 +112,7 @@
   margin: 20px 0;
 }
 
- .modal-enter {
+.modal-enter {
   opacity: 0;
 }
 
@@ -130,10 +133,12 @@
 }
 .modal-footer button{
   margin: auto;
-}
-
-
+} 
 .close{
   align-self: flex-end;
+  cursor: pointer;
+}
+.is-danger {
+  outline-color:  red;
 }
 </style>
