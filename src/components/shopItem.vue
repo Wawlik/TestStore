@@ -115,10 +115,9 @@ export default {
   align-content: center;
   flex: 1 1 25%;
   max-width: 15%;
+  min-width: 100px;
   min-height: 25vh;
-  margin-right: 7.5%;
-  margin-left: 7.5%;
-  margin: 0 7.5% 40px 7.5%;
+  margin: 15px 0 15px 0;
 }
 .count{
   width: 30px;
@@ -167,3 +166,4 @@ a{
   color: black;
 }
 </style>
+

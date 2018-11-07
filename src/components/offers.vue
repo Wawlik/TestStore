@@ -65,6 +65,13 @@ export default {
 </script>
 
 <style scoped>
+
+
+#offers{
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .cart-order-section{
   display: flex;
   flex-flow: column nowrap;
@@ -92,6 +99,7 @@ p{
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  padding: 0 20px 0 20px;
 }
 .margin-auto{
   margin: auto;

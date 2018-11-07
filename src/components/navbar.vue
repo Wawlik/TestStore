@@ -1,16 +1,14 @@
 <template>
   <div id="navbar">
-    <header class="flex">
+    <div class="navbar-content">
       <div class="main flex row-nowrap align-center">
         <router-link to="/store"><span class="navbar-main-blocks">Главная</span></router-link>
       </div>
       <div class="control flex row-nowrap ">
         <router-link to="/cart"><span class="navbar-main-blocks"> Корзина </span></router-link>
-        <div class="wishlist-wrapper flex row-nowrap align-center dropdown">
+        <div class="flex row-nowrap align-center dropdown">
           <img src="../../src/assets/wish.png" height="32px" alt="">
-          <span class="navbar-main-blocks cursor-default"> {{ wishListGoodsCount
-          }} товар{{ wishEnding
-          }}  </span>
+          <span class="navbar-main-blocks cursor-default"> {{ wishListGoodsCount }} товар{{ wishEnding }}</span>
           <div class="dropdown-content">
             <a href="#" class="wish-item"
             v-for="(item, index) in wishlistItemsSortedByDate.slice(0,5)" :key="index" >
@@ -24,11 +22,11 @@
           </router-link>
         </div>
       </div>
-      <div class="shop-info flex row-nowrap align-center">
+      <div class="flex row-nowrap align-center">
         <img src="../../src/assets/cart.png" height="32px"  alt="">
         <div class="shop-summary flex">
           <span class="cursor-default">
-            В корзине {{ goodsTotalCount}} товар{{ cartEnding}}
+            {{ goodsTotalCount}} товар{{ cartEnding}}
           </span>
           <span class="cursor-default">
             На сумму {{ moneyTotalCount}}₽
@@ -36,61 +34,61 @@
         </div>
       </div>
     </div>
-  </header>
+  </div>
 </div>
 </template>
 
 <script>
-import moment from 'moment'
+  import moment from 'moment'
 
-export default {
-  name: 'navbar',
-  data () {
-    return {
-      limit: 5,
-      dataset: []
-    }
-  },
-  created () {
-    this.$store.commit('setCartCost')
-  },
-  computed: {
-    moneyTotalCount () {
-      return this.$store.state.cartTotalCost
-    },
-    wishListGoodsCount () {
-      return this.$store.state.wishlistCount
-    },
-    goodsTotalCount () {
-      return this.$store.state.cartCount
-    },
-    wishEnding () {
-      return this.endFind(this.wishListGoodsCount)
-    },
-    cartEnding () {
-      return this.endFind(this.goodsTotalCount)
-    },
-    wishlistItemsSortedByDate () {
-      let objForSort = this.$store.state.wishlistItems
-      if (objForSort) {
-        return Object.values(objForSort).sort((a, b) =>
-          moment(a.date).isBefore(b.date) === true ? 1 : moment(a.date).isBefore(b.date) === false ? -1 : 0)
+  export default {
+    name: 'navbar',
+    data () {
+      return {
+        limit: 5,
+        dataset: []
       }
-    }
-  },
-  methods: {
-    endFind (number) {
-      let end = number % 10
-      if ('567890'.indexOf(end) !== -1 || ['11', '12', '13', '14'].indexOf(number.toString()) !== -1) {
-        return 'ов'
-      } else if ('1'.indexOf(end) !== -1) {
-        return ''
-      } else if ('234'.indexOf(end) !== -1) {
-        return 'а'
+    },
+    created () {
+      this.$store.commit('setCartCost')
+    },
+    computed: {
+      moneyTotalCount () {
+        return this.$store.state.cartTotalCost
+      },
+      wishListGoodsCount () {
+        return this.$store.state.wishlistCount
+      },
+      goodsTotalCount () {
+        return this.$store.state.cartCount
+      },
+      wishEnding () {
+        return this.endFind(this.wishListGoodsCount)
+      },
+      cartEnding () {
+        return this.endFind(this.goodsTotalCount)
+      },
+      wishlistItemsSortedByDate () {
+        let objForSort = this.$store.state.wishlistItems
+        if (objForSort) {
+          return Object.values(objForSort).sort((a, b) =>
+            moment(a.date).isBefore(b.date) === true ? 1 : moment(a.date).isBefore(b.date) === false ? -1 : 0)
+        }
+      }
+    },
+    methods: {
+      endFind (number) {
+        let end = number % 10
+        if ('567890'.indexOf(end) !== -1 || ['11', '12', '13', '14'].indexOf(number.toString()) !== -1) {
+          return 'ов'
+        } else if ('1'.indexOf(end) !== -1) {
+          return ''
+        } else if ('234'.indexOf(end) !== -1) {
+          return 'а'
+        }
       }
     }
   }
-}
 </script>
 
 <style scoped>
@@ -100,10 +98,14 @@ export default {
   margin: 0 0 40px 0;
   background-color: #00BF0E;
   border-radius: 2px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-header{
+.navbar-content{
+  width: 100%;
   height: 100%;
+  display: inline-flex;
 }
 
 p{
@@ -118,13 +120,14 @@ p{
 }
 .shop-summary{
   flex-flow: column nowrap;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: ;
   margin-right: 10px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .shop-summary span{
   color: white;
-  font: 16px Verdana;
+  font: 20px Verdana;
 }
 .flex{
   display: flex;
@@ -134,7 +137,7 @@ p{
 }
 .main{
   flex: 1 1 100px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 .control{
   flex: 8 1 100px;
@@ -159,8 +162,7 @@ a {
 }
 .navbar-main-blocks{
   color: white;
-  font: 20px Verdana;
-  user-select: none;
+  font: 24px Verdana;
 }
 .main:hover{
   background-color: #007F09;
@@ -203,6 +205,7 @@ a{
   font-family: inherit;
   margin: 0;
 }
+
 
 .navbar a:hover, .dropdown:hover .dropbtn {
   background-color: red;
@@ -254,5 +257,24 @@ a{
 }
 .switch-to-wishlist img{
   height: 100%;
+}
+@media(max-width: 768px){
+  .shop-summary{
+  margin-left: 5px;
+
+  }
+  .dropdown{
+    padding-left: 5px;
+  }
+
+  .navbar-main-blocks{
+    font: 4vw Verdana;
+  }
+  .shop-summary span{
+    font: 3.5vw Verdana;
+  }
+  .control{
+    padding-right: 5px;
+  }
 }
 </style>
