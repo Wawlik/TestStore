@@ -11,10 +11,10 @@
             <img class="main-image" :src="current.img" alt="goods">
             <div class="item-info">
               <span>{{ current.name }}</span>
-              <span>Кол-во: <input v-validate="{required: true, min:1}" 
-                :class="{'count': true, 'is-danger': errors.has('count') }" 
+              <span>Кол-во: <input v-validate="{required: true, min:1}"
+                :class="{'count': true, 'is-danger': errors.has('count') }"
                 name="count" size="20" min="1" type="number" v-model="count"></span>
-              <span>Сумма: {{ totalCount }} руб.</span>    
+              <span>Сумма: {{ totalCount }} руб.</span>
             </div>
           </div>
 
@@ -32,28 +32,28 @@
 
 <script>
 
-  export default {
-    name: 'modal',
-    data () {
-      return {
-        count: 1,
-      }
-    },
-    props:['current'],
-    computed:{
-      totalCount(){
-        return this.current.price * this.count
-      }
-    },
-    methods:{
-      addToCart(){
-        this.current.count = this.count
-        this.$emit('succeed')
-        this.$emit('close')
-        this.$router.go(-1)
-      }
+export default {
+  name: 'modal',
+  data () {
+    return {
+      count: 1
+    }
+  },
+  props: ['current'],
+  computed: {
+    totalCount () {
+      return this.current.price * this.count
+    }
+  },
+  methods: {
+    addToCart () {
+      this.current.count = this.count
+      this.$emit('succeed')
+      this.$emit('close')
+      this.$router.go(-1)
     }
   }
+}
 </script>
 <style scoped>
 .flex{
@@ -66,7 +66,7 @@
 .item-info{
   display: flex;
   flex-flow:  column nowrap;
-  align-items: flex-start; 
+  align-items: flex-start;
   justify-content: space-between;
 }
 .main-image{
@@ -133,7 +133,7 @@
 }
 .modal-footer button{
   margin: auto;
-} 
+}
 .close{
   align-self: flex-end;
   cursor: pointer;

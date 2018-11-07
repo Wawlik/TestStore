@@ -12,20 +12,20 @@
               <span>{{ user }}</span>
               <span>Телефон:</span>
               <masked-input :class="{'input': true, 'is-danger': errors.has('telephone')}"
-              v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/}" 
+              v-validate="{ required: true, regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/}"
               v-model="phone " mask="\+1 (111) 111-1111" name="telephone"
               placeholder="Номер телефона" type="tel" />
               <span  class="error">{{ errors.first('telephone') }}</span>
 
               <span>Электронная почта:</span>
-              <input v-model="email" :class="{'input': true, 'is-danger': errors.has('email')}" 
+              <input v-model="email" :class="{'input': true, 'is-danger': errors.has('email')}"
               v-validate="'required|email'" name="email" type="text" >
               <span class="error">{{ errors.first('email') }}</span>
 
-              <span>Адрес заказа: </span>   
-              <textarea :class="{'input': true, 'is-danger': errors.has('adress')}" 
+              <span>Адрес заказа: </span>
+              <textarea :class="{'input': true, 'is-danger': errors.has('adress')}"
               name="adress" v-validate="'required'" id="client-address" cols="30"
-              rows="3" v-model="clientAdress" 
+              rows="3" v-model="clientAdress"
               placeholder="Введите свой адрес"></textarea>
               <span class="error">{{ errors.first('adress') }}</span>
 
@@ -47,42 +47,42 @@
 </template>
 
 <script>
-  import maskedInput from 'vue-masked-input'
+import maskedInput from 'vue-masked-input'
 
-  export default {
-    name: 'cartOrder',
-    components:{
-      maskedInput
+export default {
+  name: 'cartOrder',
+  components: {
+    maskedInput
+  },
+  data () {
+    return {
+      phone: '',
+      clientAdress: '',
+      email: '',
+      user: 'John Doe'
+    }
+  },
+  props: ['current'],
+  computed: {
+    isComplete () {
+      return this.phone && this.clientAdress && this.email
     },
-    data () {
-      return {
-        phone: '',
-        clientAdress: '',
-        email: '',
-        user: 'John Doe'
-      }
+    totalCount () {
+      return this.$store.state.cartTotalCost
+    }
+  },
+  methods: {
+    closeModal () {
+      this.$router.go(-1)
+      this.$emit('close')
     },
-    props:['current'],
-    computed:{
-      isComplete () {
-        return this.phone && this.clientAdress && this.email
-      },
-      totalCount(){
-        return this.$store.state.cartTotalCost
-      }
-    },
-    methods:{
-      closeModal(){
-        this.$router.go(-1)
-        this.$emit('close')
-      },
-      formOrder(){
-       let items = Object.values(this.$store.state.cartItems).map( function(item){
+    formOrder () {
+      let items = Object.values(this.$store.state.cartItems).map(function (item) {
         return { key: item.key,
           count: item.count
         }
       })
-       let order = {
+      let order = {
         user: this.user,
         phone: this.phone,
         address: this.clientAdress,
@@ -92,7 +92,6 @@
       this.$router.go(-1)
       this.$emit('close')
       this.$emit('success', order)
-      return
     }
   }
 }
@@ -115,7 +114,7 @@
 .item-info{
   display: flex;
   flex-flow:  column nowrap;
-  align-items: flex-start; 
+  align-items: flex-start;
   justify-content: space-between;
 }
 .item-info *{
@@ -160,7 +159,6 @@
   color: #42b983;
 }
 
-
 .modal-enter {
   opacity: 0;
 }
@@ -199,6 +197,6 @@
   outline-color:  red;
 }
 .pointer{
-  cursor: pointer;  
+  cursor: pointer;
 }
 </style>
